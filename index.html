@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+    <head >
+        <title>PhamGiaLuong Webpage</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <header>
+            <div class="container">
+                <div id="branding">
+                    <h1>Pham Gia Luong</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#contact" onclick="showTab(event, 'Contact')">Contact</a></li>
+                        <li><a href="#interests" onclick="showTab(event, 'Experiences')">Experiences</a></li>
+                        <li><a href="#about" onclick="showTab(event, 'About')">About</a></li>
+                        <li><a href="#transcript" onclick="showTab(event, 'Transcript')">Transcript</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <section id="About" class="container tab-content">
+            <h2>About Me</h2>
+            <p>Hello! My name is Liam Galvin. I'm 20 years old and I love the color blue. I'm currently an undergraduate student at HCMUT, majoring in Computer Engineering.</p>
+        </section>
+    
+        <section id="Experiences" class="container tab-content">
+            <h2>My Experiences</h2>
+            <p>I have a passion for listening to music and reading novels. These activities help me relax and find inspiration in my everyday life.</p>
+        </section>
+    
+        <section id="Transcript" class="container tab-content">
+            <h2>Transcripts</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Semester</th>
+                        <th>Subject ID</th>
+                        <th>Subject Name</th>
+                        <th>Credit</th>
+                        <th>Score</th>
+                        <th>Average Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be dynamically loaded here -->
+                </tbody>
+            </table>
+        </section>
+    
+        <section id="Contact" class="container tab-content">
+            <h2>Contact Me</h2>
+            <p>You can reach me at:</p>
+            <ul>
+                <button>Phone: 073252153</button>
+                <button><a href="https://www.facebook.com/luong.pham2211960/">Facebook</a></button>
+                <button>Email: pham15032004@gmail.com</button>
+            </ul>
+        </section>
+    
+        <footer>
+            <p>Pham Gia Luong &copy; 2024</p>
+        </footer>
+
+        <script>
+            // Function to read Excel file and populate the transcript table
+            function populateTranscript() {
+                // URL of the Excel file
+                var fileUrl = 'transcript.xlsx';
+    
+                // Fetch the Excel file
+                fetch(fileUrl)
+                    .then(function(response) {
+                        return response.arrayBuffer();
+                    })
+                    .then(function(arrayBuffer) {
+                        // Parse the Excel file
+                        var workbook = XLSX.read(arrayBuffer, { type: 'array' });
+    
+                        // Get the first sheet
+                        var sheetName = workbook.SheetNames[0];
+                        var sheet = workbook.Sheets[sheetName];
+    
+                        // Convert the sheet data to JSON format
+                        var jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+    
+                        // Get the transcript table body
+                        var tbody = document.querySelector("#transcript tbody");
+    
+                        // Clear existing rows
+                        tbody.innerHTML = '';
+    
+                        // Populate the table with data
+                        jsonData.forEach(function(rowData) {
+                            var row = document.createElement("tr");
+                            rowData.forEach(function(cellData) {
+                                var cell = document.createElement("td");
+                                cell.textContent = cellData;
+                                row.appendChild(cell);
+                            });
+                            tbody.appendChild(row);
+                        });
+                    })
+                    .catch(function(error) {
+                        console.error('Error fetching or parsing Excel file:', error);
+                    });
+            }
+    
+            // Function to show specific tab content
+            function showTab(event, tabId) {
+                event.preventDefault();
+                var tabContents = document.querySelectorAll('.tab-content');
+                tabContents.forEach(function(content) {
+                    content.classList.remove('active');
+                });
+                document.getElementById(tabId).classList.add('active');
+            }
+    
+            // Call the function to populate the transcript table when the window loads
+            window.onload = function() {
+                populateTranscript();
+                showTab(event, 'about'); // Show the 'About' tab by default
+            }
+        </script>
+    </body>
+</html>
