@@ -1,6 +1,6 @@
 header{
     font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: x-large;
+    font-size: large;
     background-color: #3572EF;
     color: white;
     text-align: center;
@@ -9,7 +9,7 @@ header{
 
 footer{
     font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: medium;
+    font-size: small;
     background-color: #3572EF;
     color: white;
     text-align: center;
@@ -17,7 +17,7 @@ footer{
 }
 
 body {
-    font-size: larger;
+    font-size: medium;
     font-family: 'Times New Roman', Times, serif;
     background-color: white;
     text-align: justify;
@@ -25,7 +25,7 @@ body {
 
 h2 {
     font-family: Georgia, serif;
-    font-size: large;
+    font-size: medium;
     background-color: #3Abef9;
     padding: 5px;
     border-radius: 15px;
